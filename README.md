@@ -1,2 +1,2 @@
 # GroupVI
-##The Sociopath Project
+The Sociopath Project
