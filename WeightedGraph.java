@@ -213,8 +213,9 @@ public class WeightedGraph <T extends Comparable<T>> {
 
     public void printEdges()   {
         Vertex<T,Integer> temp=head;
+        int n=1;
         while (temp!=null) {
-            System.out.print("# " + temp.vertexInfo + " : " );
+            System.out.print("# "+ n +") "+ temp.vertexInfo + " : " );
             Edge<T,Integer> currentEdge = temp.firstEdge;
             while (currentEdge != null) {
                 System.out.print("[" + temp.vertexInfo + "," + currentEdge.toVertex.vertexInfo +"] " );
@@ -222,6 +223,7 @@ public class WeightedGraph <T extends Comparable<T>> {
             }
             System.out.println();
             temp=temp.nextVertex;
+            n++;
         }
     }
 
