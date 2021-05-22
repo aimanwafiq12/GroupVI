@@ -24,7 +24,7 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         outdeg=0;
         nextVertex = null;
         firstEdge = null;
-        friends = null;
+        friends = new ArrayList<>();
     }
 
     public Vertex(T vInfo, Vertex<T,N> next) {
@@ -33,7 +33,7 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         outdeg=0;
         nextVertex = next;
         firstEdge = null;
-        friends = null;
+        friends = new ArrayList<>();
 
         //Initialize these variables for each student as below:
         // 1 <= rep <= 10,
