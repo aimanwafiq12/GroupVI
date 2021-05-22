@@ -2,13 +2,16 @@
 import java.util.Scanner;
 
 
-public class Event6 {
+public class FriendshipCalculator{
     
     static int total = 0;
     static int size;
     static int[][] graph;
     
-    public static void main(String[] args) {
+    public FriendshipCalculator() {
+    }
+    
+    public static int run(){
         Scanner sc = new Scanner(System.in);
         
         size = sc.nextInt();
@@ -20,12 +23,11 @@ public class Event6 {
             graph[x-1][y-1] = 1;
             graph[y-1][x-1] = 1;
         }
-        
-        dfs();
-        System.out.println("Output: "+(total/2));
+        modifiedDfs();
+        return (total/2);
     }
     
-    public static void dfsUtil(int v, boolean visited[], int targetSize, int currentSize){
+    public static void modifiedDfsUtil(int v, boolean visited[], int targetSize, int currentSize){
         if(currentSize==targetSize){
             total++;
             return;
@@ -33,17 +35,17 @@ public class Event6 {
         for (int i = 0; i < size; i++) {
             if(!visited[i] && graph[v][i]==1){
                 visited[v] = true;
-                dfsUtil(i, visited, targetSize, currentSize+1);
+                modifiedDfsUtil(i, visited, targetSize, currentSize+1);
                 visited[v] = false;
             }
         }
     }
     
-    public static void dfs(){
+    public static void modifiedDfs(){
         boolean visited[] = new boolean[size];
         for (int i = 2; i <=size; i++) {
             for (int j = 0; j < size; j++) {
-                dfsUtil(j, visited, i, 1);
+                modifiedDfsUtil(j, visited, i, 1);
             }
         }
     }

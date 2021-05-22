@@ -260,6 +260,41 @@ public class WeightedGraph <T extends Comparable<T>> {
             }
         }
     }
+    
+    public Vertex<T, Integer> getVertexObject(T info){
+        if(!hasVertex(info)){
+            return null;
+        }
+        Vertex<T, Integer> temp = head;
+        while(temp != null){
+            if(temp.vertexInfo.compareTo(info)==0){
+                return temp;
+            }
+            temp = temp.nextVertex;
+        }
+        return null;
+    }
+    
+    public Edge<T, Integer> getEdgeObject(T source, T destination){
+        if (!hasVertex(source) || !hasVertex(destination)) {
+            return null;
+        }
+        Vertex<T, Integer> sourceVertex = head;
+        while (sourceVertex != null) {
+            if (sourceVertex.vertexInfo.compareTo(source) == 0) {
+                // Reached source vertex, look for destination now
+                Edge<T, Integer> currentEdge = sourceVertex.firstEdge;
+                while (currentEdge != null) {
+                    if (currentEdge.toVertex.vertexInfo.compareTo(destination) == 0){
+                        return currentEdge;
+                    }
+                    currentEdge = currentEdge.nextEdge;
+                }
+            }
+            sourceVertex = sourceVertex.nextVertex;
+        }
+        return null;
+    }
 
     /* not done yet
     public String solveLab(T source, T destination, int exp) {
