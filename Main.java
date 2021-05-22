@@ -93,6 +93,104 @@ public class Main {
                 break;
             }
         }
+    }
 
+    /**
+     * Event 1 
+     * @param teacherName   (Name of the student who teach)
+     * @param studentName   (Name of the student who learn)
+     * @param goodExp       (True if it is good else false)
+     * @param students      (The students graph)
+     * @return True if the method runs successfully else false.
+     */
+    public static boolean teach(String teacherName, String studentName, boolean goodExp, WeightedGraph<String> students){
+        if(!students.hasVertex(teacherName) || !students.hasVertex(studentName)){
+            return false;
+        }
+        Vertex<String, Integer> teacher = students.getVertexObject(teacherName);
+        teacher.addFriend(studentName);
+        if(students.hasEdge(teacherName, studentName)){
+            Edge<String, Integer> edge = students.getEdgeObject(teacherName, studentName);
+            edge.weight += goodExp? 10: 2;
+        }
+        else{
+            if(goodExp){
+                students.addEdge(teacherName, studentName, 10);
+            }
+            else{
+                students.addEdge(teacherName, studentName, 2);
+            }
+        }
+        return true;
+    }
+	
+    /**
+     * Event 2
+     * @param teller    (The student who tell the message)
+     * @param receiver  (The student who receive the message)
+     * @param about     (The student who is talked about)
+     * @param goodMsg   (True if it is good message else false)
+     * @param students  (The students graph)
+     * @return True if the method runs successfully else false.
+     */
+    public static boolean chat(String teller, String receiver, String about, boolean goodMsg, WeightedGraph<String> students){
+        if(!students.hasVertex(teller)|| !students.hasVertex(receiver) || !students.hasVertex(about)){
+            return false;
+        }
+        else if(!students.hasEdge(about, teller)){
+            return false;
+        }
+        int repPoint = students.getEdgeWeight(about, teller);
+        repPoint = goodMsg? (int)(repPoint*0.5): repPoint*-1;
+        if(students.hasEdge(about, receiver)){
+            Edge<String, Integer> edge = students.getEdgeObject(about, receiver);
+            edge.weight += repPoint;
+        }
+        else{
+            students.addEdge(about, receiver, repPoint);
+        }
+        return true;
+    }
+
+    /**
+     * Event 4
+     * @return the number of rounds needed to arrange the books based on the input. 
+     */
+    public static int arrangeBook() {
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        
+        ArrayList<Integer> heights = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            heights.add(sc.nextInt());
+        }
+        int round = 0;
+        boolean done = false;
+        while(!done){
+            done = true;
+            int left = heights.get(0);
+            for(int i=1; i<heights.size(); i++){
+                int current = heights.get(i);
+                if(current>left){
+                    heights.remove(i);
+                    i--;
+                    done = false;
+                }
+                left = current;
+            }
+            if(!done){
+                round++;
+            }
+        }
+        return round;
+    }
+	
+    /**
+     * Event 6
+     * @return the number of ways to form friendship based on the input. 
+     */
+    public static int formFriendship(){
+        return FriendshipCalculator.run();
     }
 }
