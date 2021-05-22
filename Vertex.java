@@ -1,5 +1,6 @@
 package com.GroupProjectAssignment;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
@@ -12,6 +13,7 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
     int dive;
     int lunchStart;
     int lunchPeriod;
+    ArrayList<String> friends;
 
 
     Random r = new Random();
@@ -22,6 +24,7 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         outdeg=0;
         nextVertex = null;
         firstEdge = null;
+        friends = null;
     }
 
     public Vertex(T vInfo, Vertex<T,N> next) {
@@ -30,6 +33,7 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         outdeg=0;
         nextVertex = next;
         firstEdge = null;
+        friends = null;
 
         //Initialize these variables for each student as below:
         // 1 <= rep <= 10,
@@ -79,5 +83,13 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
     public int totalRep(int a){
         rep = rep + a;
         return rep;
+    }
+    
+    public boolean addFriend(String name){
+        if(friends.contains(name)){
+            return false;
+        }
+        friends.add(name);
+        return true;
     }
 }
