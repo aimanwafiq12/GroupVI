@@ -6,11 +6,13 @@ import java.util.Random;
 public class WeightedGraph <T extends Comparable<T>> {
     Vertex<T,Integer> head;
     int size;
+    int reputation;
 
     Random r = new Random();
     public WeightedGraph()	{
         head=null;
         size=0;
+        reputation = 0;
     }
 
     public void clear() {
@@ -213,9 +215,8 @@ public class WeightedGraph <T extends Comparable<T>> {
 
     public void printEdges()   {
         Vertex<T,Integer> temp=head;
-        int n=1;
         while (temp!=null) {
-            System.out.print("# "+ n +") "+ temp.vertexInfo + " : " );
+            System.out.print("# " + temp.vertexInfo + " : " );
             Edge<T,Integer> currentEdge = temp.firstEdge;
             while (currentEdge != null) {
                 System.out.print("[" + temp.vertexInfo + "," + currentEdge.toVertex.vertexInfo +"] " );
@@ -223,7 +224,6 @@ public class WeightedGraph <T extends Comparable<T>> {
             }
             System.out.println();
             temp=temp.nextVertex;
-            n++;
         }
     }
 
@@ -297,6 +297,74 @@ public class WeightedGraph <T extends Comparable<T>> {
         }
         return null;
     }
+
+    /**
+     * For Event 3 (roadToGlory)
+     * Check if specified student's lunch time is overlapped or not 
+     * @param student1
+     * @param student2
+     * @return true if not overlapped, can have lunch with both students
+     * false if overlapped, can have lunch only with 1 student
+     */
+    public boolean checkLunchTime(T student1,T student2){
+        Vertex<T, Integer> s1 = head;
+        Vertex<T, Integer> s2 = head;
+        if (head==null) 
+                return false;
+            //Traverse through graph to find matching student1 & student2 vertex
+            while (s1!=null && s2!=null) {
+                if ( s1.vertexInfo.compareTo(student1) == 0 && s2.vertexInfo.compareTo(student2) == 0 ) {
+                    int lunchEndS1 = s1.lunchStart + s1.lunchPeriod;
+                    int lunchEndS2 = s2.lunchStart + s2.lunchPeriod;
+                    if (lunchEndS1<s2.lunchStart || lunchEndS2<s1.lunchStart) {
+                        reputation = reputation + 2; 
+                        return true;
+                    }
+                    else {
+                        reputation = reputation + 1;
+                        return false;
+                    }
+                }
+                s1 = s1.nextVertex;
+                s2 = s2.nextVertex;
+            }
+        return false;
+    }
+    
+    /* not done yet
+    public String solveLab(T source, T destination, int exp) {
+        if (head == null)
+            return "Graph is empty.";
+        if (!hasVertex(source) || !hasVertex(destination))
+            return source + " or " + destination + " is not available.";
+        if (!hasEdge(source, destination)) {
+            Vertex<T, Integer> sourceVertex = head;
+            while (sourceVertex != null) {
+                if (sourceVertex.vertexInfo.compareTo(source) == 0) {
+                    // Reached source vertex, look for destination now
+                    Vertex<T, Integer> destinationVertex = head;
+                    while (destinationVertex != null) {
+                        if (destinationVertex.vertexInfo.compareTo(destination) == 0) {
+                            // Reached destination vertex, add edge here
+                            int a = r.nextInt(10 - 1) + 1;
+                            if (exp == 0) {
+                                addEdge(source, destination, a);
+                                addEdge(destination, source, 2);
+                            }
+                            if (exp == 1) {
+                                addEdge(source, destination, a);
+                                addEdge(destination, source, 10);
+                            }
+                        }
+                        destinationVertex = destinationVertex.nextVertex;
+                    }
+                }
+                sourceVertex = sourceVertex.nextVertex;
+            }
+        }
+        return source+" and "+destination+" are friends already";
+    }
+    */
 
 }
 
