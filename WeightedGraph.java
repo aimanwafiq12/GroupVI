@@ -330,41 +330,6 @@ public class WeightedGraph <T extends Comparable<T>> {
             }
         return false;
     }
-    
-    /* not done yet
-    public String solveLab(T source, T destination, int exp) {
-        if (head == null)
-            return "Graph is empty.";
-        if (!hasVertex(source) || !hasVertex(destination))
-            return source + " or " + destination + " is not available.";
-        if (!hasEdge(source, destination)) {
-            Vertex<T, Integer> sourceVertex = head;
-            while (sourceVertex != null) {
-                if (sourceVertex.vertexInfo.compareTo(source) == 0) {
-                    // Reached source vertex, look for destination now
-                    Vertex<T, Integer> destinationVertex = head;
-                    while (destinationVertex != null) {
-                        if (destinationVertex.vertexInfo.compareTo(destination) == 0) {
-                            // Reached destination vertex, add edge here
-                            int a = r.nextInt(10 - 1) + 1;
-                            if (exp == 0) {
-                                addEdge(source, destination, a);
-                                addEdge(destination, source, 2);
-                            }
-                            if (exp == 1) {
-                                addEdge(source, destination, a);
-                                addEdge(destination, source, 10);
-                            }
-                        }
-                        destinationVertex = destinationVertex.nextVertex;
-                    }
-                }
-                sourceVertex = sourceVertex.nextVertex;
-            }
-        }
-        return source+" and "+destination+" are friends already";
-    }
-    */
 
 }
 
