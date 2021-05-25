@@ -132,7 +132,7 @@ public class Main {
                                     "Student 1: ");
                             s.nextLine();
                             String student1 = s.nextLine();
-                            System.out.print("Student2: ");
+                            System.out.print("Student 2: ");
                             String student2 = s.nextLine();
                             roadToGlory(student1, student2, students);
                             break;
