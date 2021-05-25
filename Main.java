@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        
 	// write your code here
         System.out.println("\n---------------WELCOME TO THE SOCIOPATH---------------\n");
         //Generate a group of students (10 of them) each with reputation (rep), diving rate (dive), lunch
@@ -76,7 +75,93 @@ public class Main {
                 }
 
                 case 4:{
-                    System.out.println("In construction...");
+                    System.out.println("Which Event do you want to do?");
+                    System.out.println("1) Event 1 - Teaching a stranger to solve lab questions.");
+                    System.out.println("2) Event 2 - Chit-chat.");
+                    System.out.println("3) Event 3 - Your road to glory.");
+                    System.out.println("4) Event 4 - Arranging books.");
+                    System.out.println("5) Event 5 - Meet your crush.");
+                    System.out.println("6) Event 6 - Friendship.");
+                    System.out.println("\nEnter '0' to exit.");
+                    System.out.println("\nEnter your option by number:");
+                    int option2 = s.nextInt();
+
+                    switch (option2){
+                        case 1:
+                        {
+                            System.out.println("Who is teaching?");
+                            s.nextLine();
+                            String teacherName = s.nextLine();
+                            System.out.println("Who did the person teach?");
+                            String studentName = s.nextLine();
+                            System.out.println("Does the student you teach had good experience?(true/false)");
+                            boolean goodExp = s.nextBoolean();
+                            teach(teacherName,studentName,goodExp,students);
+
+                            System.out.println("Below is the teacher's current details:");
+                            System.out.println("Name: " + teacherName);
+                            students.printSpecificEdges(teacherName);
+                            System.out.println("\nEvent 1 completed.\n");
+
+                            break;
+                        }
+                        case 2:
+                        {
+                            System.out.println("Who is the teller?");
+                            s.nextLine();
+                            String teller = s.nextLine();
+                            System.out.println("Who is receiving?");
+                            String receiver = s.nextLine();
+                            System.out.println("Who are they talking about?");
+                            String about = s.nextLine();
+                            System.out.println("Does the student you teach had good experience?(true/false)");
+                            boolean goodMsg = s.nextBoolean();
+                            chat(teller,receiver,about,goodMsg,students);
+
+                            System.out.println("\nBelow is the person they are chatting about current details:");
+                            System.out.println("Name: " + about);
+                            students.printSpecificEdges(about);
+                            System.out.println("Event 2 completed.\n");
+
+                            break;
+                        }
+                        case 3:
+                        {
+                            System.out.print("This is Event 3: Road to Glory." +
+                                    "\nEnter 2 name of students you want to have lunch  with: \n" +
+                                    "Student 1: ");
+                            s.nextLine();
+                            String student1 = s.nextLine();
+                            System.out.print("Student2: ");
+                            String student2 = s.nextLine();
+                            roadToGlory(student1, student2, students);
+                            break;
+                        }
+
+                        case 4:
+                        {
+                            System.out.println("\nNumber of rounds needed to make the height of the books in non-increasing order: "+arrangeBook());
+                            break;
+                        }
+
+                        case 5: {
+                            System.out.println("In progress...");
+                            break;
+                        }
+
+                        case 6:
+                        {
+                            System.out.println(formFriendship());
+                            break;
+                        }
+                        case 0:
+                        {
+                            operating = false;
+                            break;
+                        }
+                        default:
+                            System.out.println("Please enter the right option number.");
+                    }
                     break;
                 }
                 case 0:
@@ -87,20 +172,16 @@ public class Main {
                 default:
                     System.out.println("Please enter the right option number.");
             }
-            System.out.print("Do you want to continue with other option? Enter any number to continue and '0' to exit: ");
+            System.out.print("\nDo you want to continue with other option? Enter any number to continue and '0' to exit: ");
             int exit = s.nextInt();
             if(exit==0){
                 operating = false;
                 break;
             }
         }
-       
-        
     }
-        
-
     /**
-     * Event 1 
+     * Event 1
      * @param teacherName   (Name of the student who teach)
      * @param studentName   (Name of the student who learn)
      * @param goodExp       (True if it is good else false)
@@ -127,7 +208,7 @@ public class Main {
         }
         return true;
     }
-	
+
     /**
      * Event 2
      * @param teller    (The student who tell the message)
@@ -155,7 +236,6 @@ public class Main {
         }
         return true;
     }
-
     /**
      * Event 3
      * @param student1 (First choice of student that the user want to have lunch together with)
@@ -163,28 +243,30 @@ public class Main {
      * @param students (the students graph)
      */
     public static void roadToGlory(String student1, String student2, WeightedGraph<String> students) {
-       if (students.hasVertex("student1") && students.hasVertex(student2)) {
-           if (students.checkLunchTime(student1, student2))
-               System.out.println("You can have lunch with the two students!");
-           else
-               System.out.println("You can only have lunch with one student only.");
-       }
-       else {
-           System.out.println("No such students here");
-       }
-        
+        if (students.hasVertex(student1) && students.hasVertex(student2)) {
+            if (students.checkLunchTime(student1, student2))
+                System.out.println("You can have lunch with the two students!");
+            else
+                System.out.println("You can only have lunch with one student only.");
+        }
+        else {
+            System.out.println("No such students here");
+        }
+
     }
-    
+
     /**
      * Event 4
-     * @return the number of rounds needed to arrange the books based on the input. 
+     * @return the number of rounds needed to arrange the books based on the input.
      */
     public static int arrangeBook() {
         Scanner sc = new Scanner(System.in);
-        
+
+        System.out.println("Enter number of books you want to arrange: ");
         int n = sc.nextInt();
-        
+
         ArrayList<Integer> heights = new ArrayList<>();
+        System.out.println("Enter height of each book you are going to arrange: ");
         for (int i = 0; i < n; i++) {
             heights.add(sc.nextInt());
         }
@@ -208,12 +290,13 @@ public class Main {
         }
         return round;
     }
-	
+
     /**
      * Event 6
-     * @return the number of ways to form friendship based on the input. 
+     * @return the number of ways to form friendship based on the input.
      */
-    public static int formFriendship(){
+    public static String formFriendship(){
         return FriendshipCalculator.run();
     }
+
 }
