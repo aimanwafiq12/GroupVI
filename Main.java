@@ -134,6 +134,7 @@ public class Main {
                             String student1 = s.nextLine();
                             System.out.print("Student 2: ");
                             String student2 = s.nextLine();
+                            System.out.println(students.displayLunchTime(student1, student2));
                             roadToGlory(student1, student2, students);
                             break;
                         }
@@ -244,16 +245,19 @@ public class Main {
      */
     public static void roadToGlory(String student1, String student2, WeightedGraph<String> students) {
         if (students.hasVertex(student1) && students.hasVertex(student2)) {
-            if (students.checkLunchTime(student1, student2))
+            if (students.checkLunchTime(student1, student2)) {
                 System.out.println("You can have lunch with the two students!");
-            else
+            }
+            else {
                 System.out.println("You can only have lunch with one student only.");
+            }
         }
         else {
             System.out.println("No such students here");
         }
 
     }
+    
 
     /**
      * Event 4
