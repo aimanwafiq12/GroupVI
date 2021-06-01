@@ -6,13 +6,13 @@ import java.util.Random;
 public class WeightedGraph <T extends Comparable<T>> {
     Vertex<T,Integer> head;
     int size;
-    int reputation;
+    int tableSize;
 
     Random r = new Random();
     public WeightedGraph()	{
         head=null;
         size=0;
-        reputation = 0;
+        tableSize = 0;
     }
 
     public void clear() {
@@ -298,128 +298,72 @@ public class WeightedGraph <T extends Comparable<T>> {
         return null;
     }
 
-    /**
-     * For Event 3 (roadToGlory)
-     * Check if specified student's lunch time is overlapped or not 
-     * @param student1
-     * @param student2
-     * @return true if not overlapped, can have lunch with both students
-     * false if overlapped, can have lunch only with 1 student
+    /** For Event 3
+     * Check and display the lunch time for the specified student
+     * User can only have lunch with students that have the same lunch time range with him/her
+     * @param studentN
+     * @return a statement whether can have lunch with the specified student or not
      */
-    public boolean checkLunchTime(T student1,T student2){
-        //reputation = getRep(student[0]);
-        int lunchEndS1 = 0;
-        int lunchEndS2 = 0;
-        Vertex<T, Integer> s1 = head;
-        Vertex<T, Integer> s2 = head;
-        Vertex<T, Integer> current1 = head;
-        Vertex<T, Integer> current2 = head;
-        Vertex<T, Integer> user = head;
-        if (head==null) {
-                return false;
-        }
-            //Traverse through graph to find matching student1 & student2 vertex
-            while (s1!=null && s2!=null) {
-                if ( s1.vertexInfo.compareTo(student1) == 0) {
-                    current1 = s1;
-                    lunchEndS1 = current1.lunchStart + current1.lunchPeriod;
-                }
-                if (s2.vertexInfo.compareTo(student2) == 0) {
-                    current2 = s2;
-                    lunchEndS2 = current2.lunchStart + current2.lunchPeriod;
-                }
-                s1 = s1.nextVertex;
-                s2 = s2.nextVertex;
-            }
-            if (lunchEndS1<=current2.lunchStart || lunchEndS2<=current1.lunchStart) {
-                //reputation = reputation + 2; 
-                user.totalRep(2);
-                return true;
-            }
-            else {
-                //reputation = reputation + 1;
-                user.totalRep(1);
-                return false;
-            }
-    }
-
-    /**
-     * Display the lunch time of the specified students
-     * @param student1
-     * @param student2
-     * @return the student's lunch start time, lunch end time, and lunch period
-     */
-    public String displayLunchTime(T student1, T student2) {
-        int lunchEndS1;
-        int lunchEndS2;
+    public String checkLunchTime(T studentN) {
+        int lunchEndStudent;
+        int lunchEndUser;
         String str1 = "";
-        String str2 = "";
-        Vertex<T, Integer> s1 = head;
-        Vertex<T, Integer> s2 = head;
-        Vertex<T, Integer> current1;
-        Vertex<T, Integer> current2;
+        Vertex<T, Integer> student = head;  //pointer for the specified student
+        Vertex<T, Integer> user = head;     //pointer for the user (student[0])
+        Vertex<T, Integer> current;
+        lunchEndUser = user.lunchStart + user.lunchPeriod;
         if (head==null) {
             return "No graph";
         }
-            //Traverse through graph to find matching student1 & student2 vertex
-            while (s1!=null && s2!=null) {
-                if ( s1.vertexInfo.compareTo(student1) == 0) {
-                    current1 = s1; 
-                    lunchEndS1 = current1.lunchStart + current1.lunchPeriod;
-                    str1 = student1 + "\nLunchStart: " + s1.lunchStart + "\nLunchEnd: " + lunchEndS1 + "\nLunchPeriod: " + s1.lunchPeriod;
-                    
+            //Traverse through graph to find matching studentN vertex
+            while (student!=null) {
+                if ( student.vertexInfo.compareTo(studentN) == 0) {
+                    current = student; 
+                    lunchEndStudent = current.lunchStart + current.lunchPeriod;
+                    if ((student.lunchStart==user.lunchStart || lunchEndStudent==lunchEndUser) || (student.lunchStart>=user.lunchStart && lunchEndStudent<=lunchEndUser) && tableSize<=3) {
+                        user.totalRep(1);   //user gained 1 rep point
+                        str1 = "You can have lunch with \n#" + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + lunchEndStudent + "\nLunchPeriod: " + student.lunchPeriod + "\nReputation +1";
+                    }
+                    else {
+                        str1 = "You cannot hv lunch with " + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + lunchEndStudent + "\nLunchPeriod: " + student.lunchPeriod;
+                    }
                 }
-                if (s2.vertexInfo.compareTo(student2) == 0) {
-                    current2 = s2;
-                    lunchEndS2 = current2.lunchStart + current2.lunchPeriod;
-                    str2 = student2 + "\nLunchStart: " + s2.lunchStart + "\nLunchEnd: " + lunchEndS2+ "\nLunchPeriod: " + s2.lunchPeriod; 
-                }
-                s1 = s1.nextVertex;
-                s2 = s2.nextVertex;
+                student = student.nextVertex;
             }
-        return "#" + str1 + "\n#" +str2;
+        return str1;
     }
     
-    
-    
-    
-    /* Not finish yet
-    //Testing addt challenge for event 3 (upgrade of event3)
-    public boolean checkLunchTimeTest(T student1, T student2, T student3){
-        int lunchEndS1 = 0;
-        int lunchEndS2 = 0;
-        int lunchEndS3 = 0;
-        Vertex<T, Integer> s1 = head;
-        Vertex<T, Integer> s2 = head;
-        Vertex<T, Integer> s3 = head;
-        if (head==null) 
-                return false;
-            //Traverse through graph to find matching student1 & student2 vertex
-            while (s1!=null && s2!=null && s3!=null) {
-                if (s1.vertexInfo.compareTo(student1) == 0) {
-                    lunchEndS1 = s1.lunchStart + s1.lunchPeriod;
-                }
-                if (s2.vertexInfo.compareTo(student2) == 0) {
-                    lunchEndS2 = s2.lunchStart + s2.lunchPeriod;
-                }
-                if (s3.vertexInfo.compareTo(student3) == 0) {
-                    lunchEndS3 = s3.lunchStart + s3.lunchPeriod;
-                }
-                if (lunchEndS1<=s2.lunchStart || lunchEndS2<=s1.lunchStart) {
-                        reputation = reputation + 2; 
+    /**
+     * Related to Event 3
+     * @param studentN
+     * @return true if the user can have lunch together with the specified student
+     */
+    public boolean checkRep(T studentN) {
+        int lunchEndStudent;
+        int lunchEndUser;
+        Vertex<T, Integer> student = head;  //pointer for the specified student
+        Vertex<T, Integer> user = head;     //pointer for the user (student[0])
+        Vertex<T, Integer> current;
+        lunchEndUser = user.lunchStart + user.lunchPeriod;
+        if (head==null) {
+            return false;
+        }
+            //Traverse through graph to find matching studentN vertex
+            while (student!=null) {
+                if ( student.vertexInfo.compareTo(studentN) == 0) {
+                    current = student; 
+                    lunchEndStudent = current.lunchStart + current.lunchPeriod;
+                    if ((student.lunchStart==user.lunchStart || lunchEndStudent==lunchEndUser) || (student.lunchStart>=user.lunchStart && lunchEndStudent<=lunchEndUser) && tableSize<=3) {
                         return true;
                     }
                     else {
-                        reputation = reputation + 1;
                         return false;
                     }
-                s1 = s1.nextVertex;
-                s2 = s2.nextVertex;
-                s3 = s3.nextVertex;
+                }
+                student = student.nextVertex;
             }
         return false;
     }
-    */
 
 }
 

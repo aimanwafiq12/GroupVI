@@ -127,15 +127,8 @@ public class Main {
                         }
                         case 3:
                         {
-                            System.out.print("This is Event 3: Road to Glory." +
-                                    "\nEnter 2 name of students you want to have lunch  with: \n" +
-                                    "Student 1: ");
-                            s.nextLine();
-                            String student1 = s.nextLine();
-                            System.out.print("Student 2: ");
-                            String student2 = s.nextLine();
-                            System.out.println(students.displayLunchTime(student1, student2));
-                            roadToGlory(student1, student2, students);
+                            System.out.println("This is Event 3: Road to Glory.");
+                            roadToGlory(students);
                             break;
                         }
 
@@ -237,27 +230,32 @@ public class Main {
         }
         return true;
     }
+    
     /**
      * Event 3
-     * @param student1 (First choice of student that the user want to have lunch together with)
-     * @param student2 (Second choice of student)
-     * @param students (the students graph)
+     * @param students 
+     * Check if the user can have lunch with the specified student(s) and return the total reputation gained
+     * maximum student per table is 3, excludes the user
      */
-    public static void roadToGlory(String student1, String student2, WeightedGraph<String> students) {
-        if (students.hasVertex(student1) && students.hasVertex(student2)) {
-            if (students.checkLunchTime(student1, student2)) {
-                System.out.println("You can have lunch with the two students!");
-            }
-            else {
-                System.out.println("You can only have lunch with one student only.");
-            }
-        }
-        else {
-            System.out.println("No such students here");
-        }
+    public static void roadToGlory(WeightedGraph<String> students) {
+       Scanner sc = new Scanner(System.in);
+       int reputation = 0;
+       System.out.println("Enter number of students you want to hv lunch with: ");
+        int n = sc.nextInt();
 
+        ArrayList<String> studentList = new ArrayList<>();
+        System.out.println("Enter their name(s): ");
+        for (int i = 0; i <= n; i++) {
+            studentList.add(sc.nextLine());
+        }
+        for (int i = 0; i <= n; i++) {
+            System.out.println(students.checkLunchTime(studentList.get(i)));
+            if(students.checkRep(studentList.get(i)))
+                reputation+=1;
+            System.out.println();
+        }
+        System.out.print("Total reputation gained: " + reputation);
     }
-    
 
     /**
      * Event 4
