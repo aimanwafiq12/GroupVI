@@ -26,6 +26,16 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         firstEdge = null;
         friends = new ArrayList<>();
     }
+    
+    public Vertex(T vInfo){
+        vertexInfo = vInfo;
+        indeg = 0;
+        outdeg = 0;
+        nextVertex = null;
+        firstEdge = null;
+        friends = null;
+        friends = new ArrayList<>();
+    }
 
     public Vertex(T vInfo, Vertex<T,N> next) {
         vertexInfo = vInfo;
@@ -91,5 +101,15 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         }
         friends.add(name);
         return true;
+    }
+    
+    public void addFriends(String... names){
+        for(String name: names){
+            addFriend(name);
+        }
+    }
+    
+    public boolean equals(Vertex<T, N> v) {
+        return vertexInfo.compareTo(v.vertexInfo)==0;
     }
 }
