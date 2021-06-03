@@ -293,6 +293,16 @@ public class Main {
         return round;
     }
 
+
+    /**
+     * Event 5
+     */
+    public static void meetCrush(){
+        RumorSpreadingSimulator.run();
+    }
+	
+
+
     /**
      * Event 6
      * @return the number of ways to form friendship based on the input.

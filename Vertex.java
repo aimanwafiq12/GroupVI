@@ -24,6 +24,15 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         outdeg=0;
         nextVertex = null;
         firstEdge = null;
+        friends = new ArrayList<>();
+    }
+    
+    public Vertex(T vInfo){
+        vertexInfo = vInfo;
+        indeg = 0;
+        outdeg = 0;
+        nextVertex = null;
+        firstEdge = null;
         friends = null;
         friends = new ArrayList<>();
 
@@ -34,10 +43,8 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         indeg=0;
         outdeg=0;
         nextVertex = next;
-        firstEdge = null;
         friends = null;
         friends = new ArrayList<>();
-
 
         //Initialize these variables for each student as below:
         // 1 <= rep <= 10,
@@ -95,5 +102,15 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         }
         friends.add(name);
         return true;
+    }
+    
+    public void addFriends(String... names){
+        for(String name: names){
+            addFriend(name);
+        }
+    }
+    
+    public boolean equals(Vertex<T, N> v) {
+        return vertexInfo.compareTo(v.vertexInfo)==0;
     }
 }
