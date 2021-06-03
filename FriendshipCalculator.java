@@ -11,12 +11,14 @@ public class FriendshipCalculator{
     public FriendshipCalculator() {
     }
     
-    public static int run(){
+    public static String run(){
         Scanner sc = new Scanner(System.in);
-        
+                
+        System.out.println("Enter number of Friendship Relations: ");
         size = sc.nextInt();
         
         graph = new int[size][size];
+        System.out.println("Enter relations by line: *The number you enter represents the student");
         for (int i = 0; i < size; i++) {
             int x = sc.nextInt();
             int y = sc.nextInt();
@@ -24,7 +26,7 @@ public class FriendshipCalculator{
             graph[y-1][x-1] = 1;
         }
         modifiedDfs();
-        return (total/2);
+        return "\nTotal number of unique ways the friendship can be formed: "+(total/2);
     }
     
     public static void modifiedDfsUtil(int v, boolean visited[], int targetSize, int currentSize){

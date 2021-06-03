@@ -6,11 +6,13 @@ import java.util.Random;
 public class WeightedGraph <T extends Comparable<T>> {
     Vertex<T,Integer> head;
     int size;
+    int tableSize;
 
     Random r = new Random();
     public WeightedGraph()	{
         head=null;
         size=0;
+        tableSize = 0;
     }
 
     public void clear() {
@@ -296,40 +298,72 @@ public class WeightedGraph <T extends Comparable<T>> {
         return null;
     }
 
-    /* not done yet
-    public String solveLab(T source, T destination, int exp) {
-        if (head == null)
-            return "Graph is empty.";
-        if (!hasVertex(source) || !hasVertex(destination))
-            return source + " or " + destination + " is not available.";
-        if (!hasEdge(source, destination)) {
-            Vertex<T, Integer> sourceVertex = head;
-            while (sourceVertex != null) {
-                if (sourceVertex.vertexInfo.compareTo(source) == 0) {
-                    // Reached source vertex, look for destination now
-                    Vertex<T, Integer> destinationVertex = head;
-                    while (destinationVertex != null) {
-                        if (destinationVertex.vertexInfo.compareTo(destination) == 0) {
-                            // Reached destination vertex, add edge here
-                            int a = r.nextInt(10 - 1) + 1;
-                            if (exp == 0) {
-                                addEdge(source, destination, a);
-                                addEdge(destination, source, 2);
-                            }
-                            if (exp == 1) {
-                                addEdge(source, destination, a);
-                                addEdge(destination, source, 10);
-                            }
-                        }
-                        destinationVertex = destinationVertex.nextVertex;
+    /** For Event 3
+     * Check and display the lunch time for the specified student
+     * User can only have lunch with students that have the same lunch time range with him/her
+     * @param studentN
+     * @return a statement whether can have lunch with the specified student or not
+     */
+    public String checkLunchTime(T studentN) {
+        int lunchEndStudent;
+        int lunchEndUser;
+        String str1 = "";
+        Vertex<T, Integer> student = head;  //pointer for the specified student
+        Vertex<T, Integer> user = head;     //pointer for the user (student[0])
+        Vertex<T, Integer> current;
+        lunchEndUser = user.lunchStart + user.lunchPeriod;
+        if (head==null) {
+            return "No graph";
+        }
+            //Traverse through graph to find matching studentN vertex
+            while (student!=null) {
+                if ( student.vertexInfo.compareTo(studentN) == 0) {
+                    current = student; 
+                    lunchEndStudent = current.lunchStart + current.lunchPeriod;
+                    if ((student.lunchStart==user.lunchStart || lunchEndStudent==lunchEndUser) || (student.lunchStart>=user.lunchStart && lunchEndStudent<=lunchEndUser) && tableSize<=3) {
+                        user.totalRep(1);   //user gained 1 rep point
+                        str1 = "You can have lunch with \n#" + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + lunchEndStudent + "\nLunchPeriod: " + student.lunchPeriod + "\nReputation +1";
+                    }
+                    else {
+                        str1 = "You cannot hv lunch with " + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + lunchEndStudent + "\nLunchPeriod: " + student.lunchPeriod;
                     }
                 }
-                sourceVertex = sourceVertex.nextVertex;
+                student = student.nextVertex;
             }
-        }
-        return source+" and "+destination+" are friends already";
+        return str1;
     }
-    */
+    
+    /**
+     * Related to Event 3
+     * @param studentN
+     * @return true if the user can have lunch together with the specified student
+     */
+    public boolean checkRep(T studentN) {
+        int lunchEndStudent;
+        int lunchEndUser;
+        Vertex<T, Integer> student = head;  //pointer for the specified student
+        Vertex<T, Integer> user = head;     //pointer for the user (student[0])
+        Vertex<T, Integer> current;
+        lunchEndUser = user.lunchStart + user.lunchPeriod;
+        if (head==null) {
+            return false;
+        }
+            //Traverse through graph to find matching studentN vertex
+            while (student!=null) {
+                if ( student.vertexInfo.compareTo(studentN) == 0) {
+                    current = student; 
+                    lunchEndStudent = current.lunchStart + current.lunchPeriod;
+                    if ((student.lunchStart==user.lunchStart || lunchEndStudent==lunchEndUser) || (student.lunchStart>=user.lunchStart && lunchEndStudent<=lunchEndUser) && tableSize<=3) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                student = student.nextVertex;
+            }
+        return false;
+    }
 
 }
 
