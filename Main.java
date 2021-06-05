@@ -240,7 +240,7 @@ public class Main {
     public static void roadToGlory(WeightedGraph<String> students) {
        Scanner sc = new Scanner(System.in);
        int reputation = 0;
-       System.out.println("Enter number of students you want to hv lunch with: ");
+       System.out.println("Enter number of students you want to invite to have lunch together: ");
         int n = sc.nextInt();
 
         ArrayList<String> studentList = new ArrayList<>();
