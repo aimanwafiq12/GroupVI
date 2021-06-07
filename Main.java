@@ -139,7 +139,10 @@ public class Main {
                         }
 
                         case 5: {
-                            System.out.println("In progress...");
+                            System.out.println("\nThis is Event 5: Meet Your Crush" +
+                                    "\nYou have a crush on a person and you can't stop thinking about your crush." +
+                                    "\nYou must stop the rumour of you having a crush on the person before your crush knows about it.");
+                            meetCrush();
                             break;
                         }
 
