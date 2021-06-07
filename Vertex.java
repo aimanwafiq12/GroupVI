@@ -60,6 +60,9 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         int afterPeriod = a + lunchStart;
         if(afterPeriod>1360){
             lunchPeriod = 1360 - lunchStart;
+            if(lunchPeriod<=0){
+                lunchPeriod=0; //this person skips his lunch everyday
+            }
         }
         else{
             lunchPeriod = a;
