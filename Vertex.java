@@ -60,22 +60,18 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         int afterPeriod = a + lunchStart;
         if(afterPeriod>1360){
             lunchPeriod = 1360 - lunchStart;
-            if(lunchPeriod<=0){
-                lunchPeriod=0; //this person skips his lunch everyday
-            }
         }
         else{
             lunchPeriod = a;
         }
         // 5 < lunch period(minutes) < 60,
-        // a list of friends as shown in Figure 1 below with their reputation relative to this person.
     }
 
     public int generateTime(){
         Boolean check = false;
         int a=0;
         while(!check){
-            a = r.nextInt(1400+1-1100) + 1100;
+            a = r.nextInt(1350+1-1100) + 1100;
             if(a>=1160&&a<1200){
                 continue;
             }
