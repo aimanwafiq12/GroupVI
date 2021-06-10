@@ -23,14 +23,13 @@ public class Main {
         Random r = new Random();
         for(int i=0;i<studentsName.length;i++){
             int a = r.nextInt(2)+1;
-            ArrayList<Integer> check = new ArrayList<>();
             for(int j=0;j<a;j++){
                 int b = r.nextInt(10);
                 int c = r.nextInt(10)+1;
                 int d = r.nextInt(10)+1;
-                if(check.contains(b)||b==i)
+		if(b==i || students.hasEdge(studentsName[i], studentsName[b])){
                     continue;
-                check.add(b);
+                }
                 students.addEdge(studentsName[i], studentsName[b], c);
                 students.addEdge(studentsName[b], studentsName[i], d);
             }
