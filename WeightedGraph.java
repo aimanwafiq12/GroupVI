@@ -310,7 +310,6 @@ public class WeightedGraph <T extends Comparable<T>> {
         String str1 = "";
         Vertex<T, Integer> student = head;  //pointer for the specified student
         Vertex<T, Integer> user = head;     //pointer for the user (student[0])
-        Vertex<T, Integer> current;
         lunchEndUser = user.lunchStart + user.lunchPeriod;
         if (head==null) {
             return "No graph";
@@ -318,14 +317,14 @@ public class WeightedGraph <T extends Comparable<T>> {
             //Traverse through graph to find matching studentN vertex
             while (student!=null) {
                 if ( student.vertexInfo.compareTo(studentN) == 0) {
-                    current = student; 
-                    lunchEndStudent = current.lunchStart + current.lunchPeriod;
-                    if ((student.lunchStart==user.lunchStart || lunchEndStudent==lunchEndUser) || (student.lunchStart>=user.lunchStart && lunchEndStudent<=lunchEndUser) && tableSize<=3) {
+                    lunchEndStudent = student.lunchStart + student.lunchPeriod;
+                    if ((student.lunchStart==user.lunchStart || student.fixTime(lunchEndStudent)==user.fixTime(lunchEndUser)) || (student.lunchStart>=user.lunchStart && student.fixTime(lunchEndStudent)<=user.fixTime(lunchEndUser)) && tableSize<=3) {
                         user.totalRep(1);   //user gained 1 rep point
-                        str1 = "You can have lunch with \n#" + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + lunchEndStudent + "\nLunchPeriod: " + student.lunchPeriod + "\nReputation +1";
+                        tableSize++;        //table is occupied with 1 student excluding user
+                        str1 = "You can have lunch with \n#" + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + student.fixTime(lunchEndStudent) + "\nLunchPeriod: " + student.lunchPeriod + "\nReputation +1";
                     }
                     else {
-                        str1 = "You cannot hv lunch with " + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + lunchEndStudent + "\nLunchPeriod: " + student.lunchPeriod;
+                        str1 = "You cannot hv lunch with " + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + student.fixTime(lunchEndStudent) + "\nLunchPeriod: " + student.lunchPeriod;
                     }
                 }
                 student = student.nextVertex;
@@ -343,7 +342,6 @@ public class WeightedGraph <T extends Comparable<T>> {
         int lunchEndUser;
         Vertex<T, Integer> student = head;  //pointer for the specified student
         Vertex<T, Integer> user = head;     //pointer for the user (student[0])
-        Vertex<T, Integer> current;
         lunchEndUser = user.lunchStart + user.lunchPeriod;
         if (head==null) {
             return false;
@@ -351,9 +349,8 @@ public class WeightedGraph <T extends Comparable<T>> {
             //Traverse through graph to find matching studentN vertex
             while (student!=null) {
                 if ( student.vertexInfo.compareTo(studentN) == 0) {
-                    current = student; 
-                    lunchEndStudent = current.lunchStart + current.lunchPeriod;
-                    if ((student.lunchStart==user.lunchStart || lunchEndStudent==lunchEndUser) || (student.lunchStart>=user.lunchStart && lunchEndStudent<=lunchEndUser) && tableSize<=3) {
+                    lunchEndStudent = student.lunchStart + student.lunchPeriod;
+                    if ((student.lunchStart==user.lunchStart || student.fixTime(lunchEndStudent)==user.fixTime(lunchEndUser)) || (student.lunchStart>=user.lunchStart && student.fixTime(lunchEndStudent)<=user.fixTime(lunchEndUser)) && tableSize<=3) {
                         return true;
                     }
                     else {

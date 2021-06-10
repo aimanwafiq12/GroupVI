@@ -23,11 +23,11 @@ public class RumorSpreadingSimulator {
         people.get(8).addFriends("10");
         people.get(9).addFriends("4", "9");
 
-        System.out.print("Enter your crush's ID: ");
+        System.out.print("Enter your ID: ");
         int crushID = sc.nextInt();
         Vertex<String, Integer> crush = people.get(crushID - 1);
 
-        System.out.print("Enter stranger's ID: ");
+        System.out.print("Enter your crush's ID: ");
         int strangerID = sc.nextInt();
         while (crush.friends.contains(strangerID + "")) {
             System.out.println("\nCrush and stranger must be in different cluster!");

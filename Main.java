@@ -18,22 +18,30 @@ public class Main {
         studentsName[0] = s.nextLine();
 
         WeightedGraph<String> students = new WeightedGraph();
-        for(String a : studentsName)
+        for(String a : studentsName){
             students.addVertex(a);
+	}
+	    
+        // to randomly generate students' friends
         Random r = new Random();
         for(int i=0;i<studentsName.length;i++){
+            //to generate no. of friends the current student have
             int a = r.nextInt(2)+1;
             for(int j=0;j<a;j++){
+                // to generate a random friend via student ID
                 int b = r.nextInt(10);
+                // c & d are to generate random rep points
                 int c = r.nextInt(10)+1;
                 int d = r.nextInt(10)+1;
-		if(b==i || students.hasEdge(studentsName[i], studentsName[b])){
+		    if(b==i || students.hasEdge(studentsName[i], studentsName[b])){
                     continue;
                 }
                 students.addEdge(studentsName[i], studentsName[b], c);
                 students.addEdge(studentsName[b], studentsName[i], d);
+                
             }
         }
+	    
         System.out.println("\nThese are your current details, "+studentsName[0]+":");
         students.printSpecificEdges(studentsName[0]);
         System.out.println("What do you want to do? Enter the option number below: ");
@@ -138,7 +146,10 @@ public class Main {
                         }
 
                         case 5: {
-                            System.out.println("In progress...");
+                            System.out.println("\nThis is Event 5: Meet Your Crush" +
+                                    "\nYou have a crush on a person and you can't stop thinking about your crush." +
+                                    "\nYou must stop the rumour of you having a crush on the person before your crush knows about it.");
+                            meetCrush();
                             break;
                         }
 
@@ -239,7 +250,7 @@ public class Main {
     public static void roadToGlory(WeightedGraph<String> students) {
        Scanner sc = new Scanner(System.in);
        int reputation = 0;
-       System.out.println("Enter number of students you want to hv lunch with: ");
+       System.out.println("Enter number of students you want to invite to have lunch together: ");
         int n = sc.nextInt();
 
         ArrayList<String> studentList = new ArrayList<>();

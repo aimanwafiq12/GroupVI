@@ -65,14 +65,13 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
             lunchPeriod = a;
         }
         // 5 < lunch period(minutes) < 60,
-        // a list of friends as shown in Figure 1 below with their reputation relative to this person.
     }
 
     public int generateTime(){
         Boolean check = false;
         int a=0;
         while(!check){
-            a = r.nextInt(1400+1-1100) + 1100;
+            a = r.nextInt(1350+1-1100) + 1100;
             if(a>=1160&&a<1200){
                 continue;
             }
@@ -112,5 +111,26 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
     
     public boolean equals(Vertex<T, N> v) {
         return vertexInfo.compareTo(v.vertexInfo)==0;
+    }
+    
+    /**
+     * Fix the time when it is 1360 instead of 1400 and etc
+     * @param time
+     * @return the fixed time
+     */
+    public int fixTime(int time) {
+        if (time>=1160 && time<=1210) {
+            time = time + 40;
+        }
+        else if (time>=1260 && time<= 1310) {
+            time = time + 40;
+        }
+        else if (time>=1360 && time<= 1410) {
+            time = time + 40;
+        }
+        else if (time>=1460 && time<= 1510) {
+            time = time + 40;
+        }
+        return time;
     }
 }
