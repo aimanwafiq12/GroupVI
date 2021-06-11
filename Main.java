@@ -8,11 +8,11 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
-        System.out.println("\n---------------------HELLO USER--------------------");
-        System.out.println("\n---------------WELCOME TO THE SOCIOPATH---------------\n");
+        System.out.println("\n--------------------- GROUP VI--------------------");
+        System.out.println("\n--------------- WELCOME TO THE SOCIOPATH ---------------\n");
         //Generate a group of students (10 of them) each with reputation (rep), diving rate (dive), lunch
         //starting time (lunchStart), lunch period (lunchPeriod), and friends (friends).
-        String [] studentsName = {null, "Bala", "Chen", "David", "Ella", "Fong", "Grealish","Harry", "Irene", "Joshua"};
+        String [] studentsName = {null, "Bala", "Chen", "David", "Ella", "Fong", "Grealish","Harry", "Irene", "Joshua","Kelly"};
 
         Scanner s = new Scanner(System.in);
         System.out.print("Please enter your name: ");
@@ -28,20 +28,20 @@ public class Main {
         Random r = new Random();
         for(int i=0;i<studentsName.length;i++){
             //to generate no. of friends the current student have
+            // max=2;min=1; ((max-min)+1)+min
             int a = r.nextInt(2)+1;
 
-          Vertex<String, Integer> currentStudent = students.getVertexObject(studentsName[i]);
+            Vertex<String, Integer> currentStudent = students.getVertexObject(studentsName[i]);
             while(currentStudent.indeg < a){
-
                 // to generate a random friend via student ID
                 int b = r.nextInt(10);
                 // c & d are to generate random rep points
                 int c = r.nextInt(10)+1;
                 int d = r.nextInt(10)+1;
-
-              while(b == i || students.hasEdge(studentsName[i], studentsName[b]) || students.getIndeg(studentsName[b])>=2) {
+                // if the random student ID generated is the same as current student OR the edge from Current Student to Student B has created
+                // don't add as friend again
+                while(b == i || students.hasEdge(studentsName[i], studentsName[b]) || students.getIndeg(studentsName[b])>=2) {
                     b = r.nextInt(10);
-                
                 }
                 students.addEdge(studentsName[i], studentsName[b], c);
                 students.addEdge(studentsName[b], studentsName[i], d);
@@ -54,14 +54,15 @@ public class Main {
         boolean operating = true;
         while(operating){
             System.out.println("\n******************* THE MAIN PAGE *********************");
-            System.out.println("\nWhat do you want to do?");
+            System.out.println("\nOPTIONS:");
 
-            System.out.println("1) Show my current profile details.");
-            System.out.println("2) Show other student's profile details.");
-            System.out.println("3) Display all students friendship list.");
-            System.out.println("4) Check out events available.");
+            System.out.println("1) MY CURRENT PROFILE");
+            System.out.println("2) OTHER STUDENT'S PROFILE");
+            System.out.println("3) ALL STUDENTS' PROFILE");
+            System.out.println("4) FRIENDSHIP LIST");
+            System.out.println("5) THE EVENTS");
             System.out.println("\n'0' to exit.\n");
-            System.out.print("Enter your option (0-4): ");
+            System.out.print("Enter your option (0-5): ");
             int option = s.nextInt();
             System.out.println();
 
@@ -69,7 +70,7 @@ public class Main {
                 case 1:
                 {
                     System.out.println("***************** OPTION 1 ******************" +
-                            "\n\nBelow are your current profile details:");
+                            "\n\nBelow is your current profile details:");
                     System.out.println("Name: " + studentsName[0]);
                     students.printSpecificEdges(studentsName[0]);
                     System.out.println("********* Thank you for choosing option 1 **********\n");
@@ -89,122 +90,159 @@ public class Main {
                 case 3:
                 {
                     System.out.println("***************** OPTION 3 ******************");
-                    System.out.println("All 10 students' friendship list\n");
-                    students.printEdges();
+                    System.out.println("\nAll 10 students' profile details");
+                    for(int i=0; i< studentsName.length ;i++) {
+                        System.out.println("\n-------------- Student "+(i+1)+" -----------------");
+                        System.out.println("Student Name: "+studentsName[i]);
+                        students.printSpecificEdges(studentsName[i]);
+                        System.out.println("------------------------------------------\n");
+                    }
                     System.out.println("\n********* Thank you for choosing option 3 **********\n");
                     break;
                 }
+                case 4:
+                {
+                    System.out.println("***************** OPTION 4 ******************");
+                    System.out.println("All 10 students' friendship list\n");
+                    students.printEdges();
+                    System.out.println("\n********* Thank you for choosing option 4 **********\n");
+                    break;
+                }
 
-                case 4:{
-                    System.out.println("\n\n********************** THE EVENTS ***********************\n");
+                case 5:{
+                    boolean events = true;
+                    while(events){
+                        System.out.println("\n\n********************** THE EVENTS ***********************\n");
 
-                    System.out.println("Which Event do you want to do?");
-                    System.out.println("1) Event 1 - Teaching a stranger to solve lab questions.");
-                    System.out.println("2) Event 2 - Chit-chat.");
-                    System.out.println("3) Event 3 - Your road to glory.");
-                    System.out.println("4) Event 4 - Arranging books.");
-                    System.out.println("5) Event 5 - Meet your crush.");
-                    System.out.println("6) Event 6 - Friendship.");
-                    System.out.println("\n'0' back to THE MAIN PAGE and EXIT PAGE.");
-                    System.out.println("\nEnter your option (0-6):");
-                    int option2 = s.nextInt();
+                        System.out.println("Which Event do you want to do?");
+                        System.out.println("1) Event 1 - Teaching a stranger to solve lab questions.");
+                        System.out.println("2) Event 2 - Chit-chat.");
+                        System.out.println("3) Event 3 - Your road to glory.");
+                        System.out.println("4) Event 4 - Arranging books.");
+                        System.out.println("5) Event 5 - Meet your crush.");
+                        System.out.println("6) Event 6 - Friendship.");
+                        System.out.println("\n'0' back to THE MAIN PAGE and EXIT PAGE.");
+                        System.out.println("\nEnter your option (0-6):");
+                        int option2 = s.nextInt();
 
-                    switch (option2){
-                        case 1:
-                        {
-                            System.out.println("\n**************** EVENT 1: TEACHING A STRANGER ****************");
-                            System.out.println("\nWho is teaching?");
-                            s.nextLine();
-                            String teacherName = s.nextLine();
-                            System.out.println("Who did the person teach?");
-                            String studentName = s.nextLine();
-                            System.out.println("Does the student you teach had good experience?(true/false)");
-                            boolean goodExp = s.nextBoolean();
-                            teach(teacherName,studentName,goodExp,students);
+                        switch (option2){
+                            case 1:
+                            {
+                                System.out.println("\n**************** EVENT 1: TEACHING A STRANGER ****************");
+                                System.out.println("\nWho is teaching?");
+                                s.nextLine();
+                                String teacherName = s.nextLine();
+                                System.out.println("Who did the person teach?");
+                                String studentName = s.nextLine();
+                                System.out.println("Does the student you teach had good experience?(true/false)");
+                                boolean goodExp = s.nextBoolean();
+                                teach(teacherName,studentName,goodExp,students);
+                                students.addRepEvent1(teacherName, goodExp,1); // to update in main profile details
+                                students.addRepEvent1(studentName, goodExp,2); // to update in main profile details
 
-                            System.out.println("\n------------Updated "+teacherName+"'s Current Details --------------");
-                            System.out.println("Name: " + teacherName);
-                            students.printSpecificEdges(teacherName);
-                            System.out.println("NOTE: "+studentName+" is added to "+teacherName+"'s friends list.\n");
-                            System.out.println("*************** THANK YOU FOR CHOOSING EVENT 1 ****************\n");
+                                System.out.println("\n------------Updated "+teacherName+"'s Current Details --------------");
+                                System.out.println("Name: " + teacherName);
+                                students.printSpecificEdges(teacherName);
+                                System.out.println("NOTE: "+studentName+" is added to "+teacherName+"'s friends list.\n");
 
-                            break;
+                                System.out.println("\n------------Updated "+studentName+"'s Current Details --------------");
+                                System.out.println("Name: " + studentName);
+                                students.printSpecificEdges(studentName);
+                                System.out.println("NOTE: "+teacherName+" is added to "+studentName+"'s friends list.\n");
+
+                                System.out.println("*************** THANK YOU FOR CHOOSING EVENT 1 ****************\n");
+
+                                System.out.println("Back to THE EVENTS page? (true/false):");
+                                events = s.nextBoolean();
+                                break;
+                            }
+                            case 2:
+                            {
+                                System.out.println("\n******************* EVENT 2: CHIT-CHAT *******************");
+
+                                System.out.println("Who is the teller?");
+                                s.nextLine();
+                                String teller = s.nextLine();
+                                System.out.println("Who is receiving?");
+                                String receiver = s.nextLine();
+                                System.out.println("Who are they talking about?");
+                                String about = s.nextLine();
+                                System.out.println("Is it a good message?(true/false)");
+                                boolean goodMsg = s.nextBoolean();
+                                chat(teller,receiver,about,goodMsg,students);
+
+                                System.out.println("\n------------Updated "+about+"'s Current Details --------------");
+                                System.out.println("Name: " + about);
+                                students.printSpecificEdges(about);
+                                System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 2 ****************\n");
+
+                                System.out.println("Back to THE EVENTS page? (true/false):");
+                                events = s.nextBoolean();
+                                break;
+                            }
+                            case 3:
+                            {
+                                System.out.println("\n******************* EVENT 3: ROAD TO GLORY *******************");
+
+                                System.out.println("This is Event 3: Road to Glory.");
+                                roadToGlory(students);
+
+                                System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 3 ****************\n");
+
+                                System.out.println("Back to THE EVENTS page? (true/false):");
+                                events = s.nextBoolean();
+                                break;
+                            }
+
+                            case 4:
+                            {
+                                System.out.println("\n******************* EVENT 4: ARRANGING BOOKS *******************");
+
+                                System.out.println("\nNumber of rounds needed to make the height of the books in non-increasing order: "+arrangeBook());
+
+                                System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 4 ****************\n");
+
+                                System.out.println("Back to THE EVENTS page? (true/false):");
+                                events = s.nextBoolean();
+                                break;
+                            }
+
+                            case 5: {
+                                System.out.println("\n******************* EVENT 5: MEET YOUR CRUSH *******************");
+
+                                System.out.println("\nThis is Event 5: Meet Your Crush" +
+                                        "\nYou have a crush on a person and you can't stop thinking about your crush." +
+                                        "\nYou must stop the rumour of you having a crush on the person before your crush knows about it.");
+                                meetCrush();
+
+                                System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 5 ****************\n");
+
+                                System.out.println("Back to THE EVENTS page? (true/false):");
+                                events = s.nextBoolean();
+                                break;
+                            }
+
+                            case 6:
+                            {
+                                System.out.println("\n******************* EVENT 6: FRIENDSHIP *******************");
+
+                                System.out.println(formFriendship());
+
+                                System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 6 ****************\n");
+
+                                System.out.println("Back to THE EVENTS page? (true/false):");
+                                events = s.nextBoolean();
+                                break;
+                            }
+                            case 0:
+                            {
+                                events = false;
+                                break;
+                            }
+                            default:
+                                System.out.println("YOU ENTERED YOUR OPTION WRONGLY!!!");
+                                System.out.println("Please enter the CORRECT OPTION number.");
                         }
-                        case 2:
-                        {
-                            System.out.println("\n******************* EVENT 2: CHIT-CHAT *******************");
-
-                            System.out.println("Who is the teller?");
-                            s.nextLine();
-                            String teller = s.nextLine();
-                            System.out.println("Who is receiving?");
-                            String receiver = s.nextLine();
-                            System.out.println("Who are they talking about?");
-                            String about = s.nextLine();
-                            System.out.println("Is it a good message?(true/false)");
-                            boolean goodMsg = s.nextBoolean();
-                            chat(teller,receiver,about,goodMsg,students);
-
-                            System.out.println("\n------------Updated "+about+"'s Current Details --------------");
-                            System.out.println("Name: " + about);
-                            students.printSpecificEdges(about);
-                            System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 2 ****************\n");
-
-                            break;
-                        }
-                        case 3:
-                        {
-                            System.out.println("\n******************* EVENT 3: ROAD TO GLORY *******************");
-
-                            System.out.println("This is Event 3: Road to Glory.");
-                            roadToGlory(students);
-
-                            System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 3 ****************\n");
-
-                            break;
-                        }
-
-                        case 4:
-                        {
-                            System.out.println("\n******************* EVENT 4: ARRANGING BOOKS *******************");
-
-                            System.out.println("\nNumber of rounds needed to make the height of the books in non-increasing order: "+arrangeBook());
-
-                            System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 4 ****************\n");
-
-                            break;
-                        }
-
-                        case 5: {
-                            System.out.println("\n******************* EVENT 5: MEET YOUR CRUSH *******************");
-
-                            System.out.println("\nThis is Event 5: Meet Your Crush" +
-                                    "\nYou have a crush on a person and you can't stop thinking about your crush." +
-                                    "\nYou must stop the rumour of you having a crush on the person before your crush knows about it.");
-                            meetCrush();
-
-                            System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 5 ****************\n");
-
-                            break;
-                        }
-
-                        case 6:
-                        {
-                            System.out.println("\n******************* EVENT 6: FRIENDSHIP *******************");
-
-                            System.out.println(formFriendship());
-
-                            System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 6 ****************\n");
-                            break;
-                        }
-                        case 0:
-                        {
-                            operating = false;
-                            break;
-                        }
-                        default:
-                            System.out.println("YOU ENTERED YOUR OPTION WRONGLY!!!");
-                            System.out.println("Please enter the CORRECT OPTION number.");
                     }
                     break;
                 }
@@ -253,11 +291,14 @@ public class Main {
             edge.weight += goodExp? 10: 2;
         }
         else{
+            // the student who learnt can also get +2 rep points ; as a token of diligence in learning; and they'll be friends
             if(goodExp){
-                students.addEdge(teacherName, studentName, 10);
+                students.addEdge(studentName, teacherName, 10);
+                students.addEdge(teacherName,studentName, 2);
             }
             else{
-                students.addEdge(teacherName, studentName, 2);
+                students.addEdge(studentName, teacherName, 2);
+                students.addEdge(teacherName,studentName, 2);
             }
         }
         return true;
