@@ -2,6 +2,7 @@ package com.GroupProjectAssignment;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Stack;
 
 public class WeightedGraph <T extends Comparable<T>> {
     private java.util.LinkedList<T> que = new java.util.LinkedList<>();
@@ -373,6 +374,55 @@ public class WeightedGraph <T extends Comparable<T>> {
         return false;
     }
     
+    //------------------ Ken thompson-----------------------------------------------
+    
+    private ArrayList<Vertex<T, Integer>> getAdjacentObjects(Vertex<T, Integer> target) {
+        ArrayList<Vertex<T, Integer>> list = new ArrayList<>();
+        Edge<T, Integer> currentEdge = target.firstEdge;
+        while (currentEdge != null) {
+            list.add(currentEdge.toVertex);
+            currentEdge = currentEdge.nextEdge;
+        }
+        return list;
+    }
+    
+    /**
+     * Find the path from source to destination
+     * @param source
+     * @param destination
+     * @return the path start from source and end at destination.
+     */
+    public ArrayList<T> dfs(T source, T destination) {
+        Stack<T> pathStack = new Stack<>();
+        ArrayList<T> visited = new ArrayList<>();
+        Vertex<T, Integer> start = getVertexObject(source);
+        
+        ArrayList<T> path = new ArrayList<>();
+        path.add(source);
+        dfsUtil(destination, pathStack, visited, start);
+        while(!pathStack.isEmpty()){
+            path.add(pathStack.pop());
+        }
+        return path;
+    }
+    private boolean dfsUtil(T destination, Stack<T> path, ArrayList<T> visited, Vertex<T, Integer> current){
+        if(visited.contains(current.vertexInfo)){
+            return false;
+        }
+        else if(current.vertexInfo.compareTo(destination)==0){
+            return true;
+        }
+        
+        visited.add(current.vertexInfo);
+        ArrayList<Vertex<T, Integer>> adjacent = getAdjacentObjects(current);
+        for(Vertex<T, Integer> temp: adjacent){
+            if(dfsUtil(destination, path, visited, temp)){
+                path.push(temp.vertexInfo);
+                return true;
+            }
+        }
+        return false;
+
     //Trying out bfs for six degree of ken thompson
     /*
     public void enqueue(T e) {

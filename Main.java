@@ -29,17 +29,19 @@ public class Main {
         for(int i=0;i<studentsName.length;i++){
             //to generate no. of friends the current student have
             int a = r.nextInt(2)+1;
-            ArrayList<Integer> check = new ArrayList<>();
-            for(int j=0;j<a;j++){
+
+          Vertex<String, Integer> currentStudent = students.getVertexObject(studentsName[i]);
+            while(currentStudent.indeg < a){
+
                 // to generate a random friend via student ID
                 int b = r.nextInt(10);
                 // c & d are to generate random rep points
                 int c = r.nextInt(10)+1;
                 int d = r.nextInt(10)+1;
-                // if the random student ID generated is the same as current student OR the edge from Current Student to Student B has created
-                // don't add as friend again
-                if(b==i || students.hasEdge(studentsName[i], studentsName[b])){
-                    continue;
+
+              while(b == i || students.hasEdge(studentsName[i], studentsName[b]) || students.getIndeg(studentsName[b])>=2) {
+                    b = r.nextInt(10);
+                
                 }
                 students.addEdge(studentsName[i], studentsName[b], c);
                 students.addEdge(studentsName[b], studentsName[i], d);
