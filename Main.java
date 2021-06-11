@@ -34,7 +34,7 @@ public class Main {
                 // c & d are to generate random rep points
                 int c = r.nextInt(10)+1;
                 int d = r.nextInt(10)+1;
-		while(b == i || students.hasEdge(studentsName[i], studentsName[b]) || students.getVertexObject(studentsName[b]).indeg>=2) {
+		while(b == i || students.hasEdge(studentsName[i], studentsName[b]) || students.getIndeg(studentsName[b])>=2) {
                     b = r.nextInt(10);
                 }
                 students.addEdge(studentsName[i], studentsName[b], c);
