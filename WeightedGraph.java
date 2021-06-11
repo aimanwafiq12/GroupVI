@@ -422,6 +422,7 @@ public class WeightedGraph <T extends Comparable<T>> {
             }
         }
         return false;
+    }
 
     //Trying out bfs for six degree of ken thompson
     /*
