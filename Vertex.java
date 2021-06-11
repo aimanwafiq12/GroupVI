@@ -26,7 +26,7 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         firstEdge = null;
         friends = new ArrayList<>();
     }
-    
+
     public Vertex(T vInfo){
         vertexInfo = vInfo;
         indeg = 0;
@@ -52,11 +52,16 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         dive = r.nextInt(100)+1;
 
         // 1100 <= lunch time <= 1400,
+        // call the generateTime method
         lunchStart = generateTime();
-        int a = r.nextInt(60+1-5)+5;
-        while(a%10!=0){
-            a = r.nextInt(60+1-5)+5;
+
+        // to generate lunch period; minimum time period generated is 10 ; maximum is 60
+        int a = r.nextInt(60-5)+5;
+        // this is to generate period time of 5, 10, 15, 20, 25, until 60 with interval of 5
+        while(a%10!=0 && a%10!=5){
+            a = r.nextInt(60-5)+5;
         }
+        //to get the LunchEnd time
         int afterPeriod = a + lunchStart;
         if(afterPeriod>1360){
             lunchPeriod = 1360 - lunchStart;
@@ -65,6 +70,7 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
             lunchPeriod = a;
         }
         // 5 < lunch period(minutes) < 60,
+        // a list of friends as shown in Figure 1 below with their reputation relative to this person.
     }
 
     public int generateTime(){
@@ -94,7 +100,7 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         rep = rep + a;
         return rep;
     }
-    
+
     public boolean addFriend(String name){
         if(friends.contains(name)){
             return false;
@@ -102,17 +108,17 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         friends.add(name);
         return true;
     }
-    
+
     public void addFriends(String... names){
         for(String name: names){
             addFriend(name);
         }
     }
-    
+
     public boolean equals(Vertex<T, N> v) {
         return vertexInfo.compareTo(v.vertexInfo)==0;
     }
-    
+
     /**
      * Fix the time when it is 1360 instead of 1400 and etc
      * @param time

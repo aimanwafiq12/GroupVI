@@ -5,6 +5,9 @@ import java.util.Random;
 import java.util.Stack;
 
 public class WeightedGraph <T extends Comparable<T>> {
+    private java.util.LinkedList<T> que = new java.util.LinkedList<>();
+    private java.util.LinkedList<T> visited = new java.util.LinkedList<>();
+    
     Vertex<T,Integer> head;
     int size;
     int tableSize;
@@ -311,15 +314,19 @@ public class WeightedGraph <T extends Comparable<T>> {
         String str1 = "";
         Vertex<T, Integer> student = head;  //pointer for the specified student
         Vertex<T, Integer> user = head;     //pointer for the user (student[0])
-        lunchEndUser = user.lunchStart + user.lunchPeriod;
+        int lunchEndU = user.lunchStart + user.lunchPeriod;
+        lunchEndUser = user.fixTime(lunchEndU);
         if (head==null) {
             return "No graph";
         }
             //Traverse through graph to find matching studentN vertex
             while (student!=null) {
                 if ( student.vertexInfo.compareTo(studentN) == 0) {
-                    lunchEndStudent = student.lunchStart + student.lunchPeriod;
-                    if ((student.lunchStart==user.lunchStart || student.fixTime(lunchEndStudent)==user.fixTime(lunchEndUser)) || (student.lunchStart>=user.lunchStart && student.fixTime(lunchEndStudent)<=user.fixTime(lunchEndUser)) && tableSize<=3) {
+                    int lunchEndS = student.lunchStart + student.lunchPeriod;
+                    lunchEndStudent = student.fixTime(lunchEndS);
+                    if ((student.lunchStart==user.lunchStart || lunchEndStudent==lunchEndUser) || (student.lunchStart>=user.lunchStart && lunchEndStudent<=lunchEndUser) || 
+                        (student.lunchStart>user.lunchStart && student.lunchStart<lunchEndUser) || (lunchEndStudent>user.lunchStart && lunchEndStudent<lunchEndUser) &&
+                        tableSize<=3) {
                         user.totalRep(1);   //user gained 1 rep point
                         tableSize++;        //table is occupied with 1 student excluding user
                         str1 = "You can have lunch with \n#" + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + student.fixTime(lunchEndStudent) + "\nLunchPeriod: " + student.lunchPeriod + "\nReputation +1";
@@ -343,15 +350,19 @@ public class WeightedGraph <T extends Comparable<T>> {
         int lunchEndUser;
         Vertex<T, Integer> student = head;  //pointer for the specified student
         Vertex<T, Integer> user = head;     //pointer for the user (student[0])
-        lunchEndUser = user.lunchStart + user.lunchPeriod;
+        int lunchEndU = user.lunchStart + user.lunchPeriod;
+        lunchEndUser = user.fixTime(lunchEndU);     
         if (head==null) {
             return false;
         }
             //Traverse through graph to find matching studentN vertex
             while (student!=null) {
                 if ( student.vertexInfo.compareTo(studentN) == 0) {
-                    lunchEndStudent = student.lunchStart + student.lunchPeriod;
-                    if ((student.lunchStart==user.lunchStart || student.fixTime(lunchEndStudent)==user.fixTime(lunchEndUser)) || (student.lunchStart>=user.lunchStart && student.fixTime(lunchEndStudent)<=user.fixTime(lunchEndUser)) && tableSize<=3) {
+                    int lunchEndS = student.lunchStart + student.lunchPeriod;
+                    lunchEndStudent = student.fixTime(lunchEndS);
+                    if ((student.lunchStart==user.lunchStart || lunchEndStudent==lunchEndUser) || (student.lunchStart>=user.lunchStart && lunchEndStudent<=lunchEndUser) || 
+                        (student.lunchStart>user.lunchStart && student.lunchStart<lunchEndUser) || (lunchEndStudent>user.lunchStart && lunchEndStudent<lunchEndUser) &&
+                        tableSize<=3) {
                         return true;
                     }
                     else {
@@ -411,7 +422,72 @@ public class WeightedGraph <T extends Comparable<T>> {
             }
         }
         return false;
+
+    //Trying out bfs for six degree of ken thompson
+    /*
+    public void enqueue(T e) {
+        ///ArrayList<T> list = new ArrayList();
+        //list.add(e);
+        //return list;
+        que.addLast(e);
     }
 
+    
+    public void enqueue(ArrayList<T> e) {
+        //ArrayList<T> list = new ArrayList();
+        //list.add(e);
+        //return list;
+        que.addLast(e);
+    }
+    
+    public T dequeue() {
+        //ArrayList<T> list = new ArrayList();;
+        //list.remove(0);
+        //return list;
+        return que.removeFirst();
+    }
+    
+    public ArrayList<T> getAdjacent (T v)  {
+        if (!hasVertex(v))
+            return null;
+        ArrayList<T> list = new ArrayList<T>();
+        Vertex<T,Integer> temp = head;
+        while (temp!=null)	{
+            if ( temp.vertexInfo.compareTo( v ) == 0 )   {
+                // Reached vertex, look for destination now
+                Edge<T,Integer> currentEdge = temp.firstEdge;
+                while (currentEdge != null) {
+                    list.add(currentEdge.toVertex.vertexInfo);
+                    currentEdge=currentEdge.nextEdge;
+                }
+            }
+            temp=temp.nextVertex;
+        }
+        return list;
+    }
+    
+    public boolean bfs(T destination) {
+        Vertex<T, Integer> current = head;
+        ArrayList<T> adjacent = new ArrayList<>();
+        int n = 0;
+        if (head==null) {
+            return false;
+        }
+        //Traverse through graph 
+        while (current!=null) {
+            enqueue(current.vertexInfo);    //add the current element to the queue
+            visited.add(dequeue());         //dequeue the element and add to visited list
+            adjacent = getNeighbours(visited.get(n));
+            if (que.contains(adjacent))
+                continue;
+            else
+                enqueue(adjacent);
+            //enqueue(getAdjacent(visited.get(n)));     
+        }
+        n++;
+        current = current.nextVertex;
+        return false;
+   }
+*/
 }
 
