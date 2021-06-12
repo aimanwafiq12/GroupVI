@@ -182,7 +182,10 @@ public class Main {
                                     "\nYou have a crush on a person and you can't stop thinking about your crush." +
                                     "\nYou must stop the rumour of you having a crush on the person before your crush knows about it.");
                             meetCrush();
-
+                            
+                            System.out.println("\nWhile you are here, test your 6 degree to Ken Thompson:");
+                            //suggestion: ask first if want to cont to 6degree
+                            sixDegree(studentsName[0], studentsName, students);
                             System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 5 ****************\n");
 
                             break;
@@ -368,5 +371,27 @@ public class Main {
     public static String formFriendship(){
         return FriendshipCalculator.run();
     }
-
+    
+    /**
+     * Six degree to Ken Thompson
+     * @param user 
+     * @param studentList //the list of all students in graph
+     * @param students 
+     */
+    public static void sixDegree(String user, String[] studentList, WeightedGraph<String> students) {
+        Random r = new Random();
+        for (String studentList1 : studentList) {
+            //give a random student a new friend, Ken Thompson
+            int a = r.nextInt(2);
+            if (a==1) {
+                students.addVertex("Ken Thompson");
+                students.addEdge(studentList1, "Ken Thompson", 1);
+            }
+        }
+        System.out.println("Here are your connection to Ken Thompson:");
+        //students.dfs(user, "Ken Thompson");
+        System.out.println(students.dfs(user, "Ken Thompson"));
+        System.out.println(students.hop(user, "Ken Thompson"));
+    }
+    
 }
