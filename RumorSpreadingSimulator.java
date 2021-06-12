@@ -23,11 +23,11 @@ public class RumorSpreadingSimulator {
         people.get(8).addFriends("10");
         people.get(9).addFriends("4", "9");
 
-        System.out.print("Enter your ID: ");
+        System.out.print("Enter your crush's ID: ");
         int crushID = sc.nextInt();
         Vertex<String, Integer> crush = people.get(crushID - 1);
 
-        System.out.print("Enter your crush's ID: ");
+        System.out.print("Enter the stranger's ID: ");
         int strangerID = sc.nextInt();
         while (crush.friends.contains(strangerID + "")) {
             System.out.println("\nCrush and stranger must be in different cluster!");
@@ -50,7 +50,7 @@ public class RumorSpreadingSimulator {
                 System.out.println("Person ID: "+stranger.friends.get(0));
             }
             else{
-                //Never reach here based on the friendship list in question.
+                //Never reach here based on the friendship graph in question.
                 System.out.println("You cannot prevent your crush from knowing about the rumor.");
             }
         }
