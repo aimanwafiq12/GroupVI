@@ -372,6 +372,37 @@ public class WeightedGraph <T extends Comparable<T>> {
         return false;
     }
     
+    /**
+     * Related to Event 1
+     * @param v,exp,a
+     * @return the total rep with updated reputation points
+     */    public int addRepEvent1(T v, boolean exp, int a){
+        if (!hasVertex(v))
+            return 0;
+        // a==1 is for teacher
+        if(a==1) {
+            Vertex<T, Integer> temp = head;
+            while (temp != null) {
+                if (temp.vertexInfo.compareTo(v) == 0 && exp) {
+                    return temp.totalRep(10);
+                } else if (temp.vertexInfo.compareTo(v) == 0 && !exp) {
+                    return temp.totalRep(2);
+                }
+                temp = temp.nextVertex;
+            }
+        // else if a!=1 is for student
+        }else{
+            Vertex<T, Integer> temp = head;
+            while (temp != null) {
+                if (temp.vertexInfo.compareTo(v) == 0 && exp) {
+                    return temp.totalRep(2);
+                }
+                temp = temp.nextVertex;
+            }
+        }
+        return 0;
+    }
+    
     //------------------ Ken thompson-----------------------------------------------
     
     private ArrayList<Vertex<T, Integer>> getAdjacentObjects(Vertex<T, Integer> target) {
