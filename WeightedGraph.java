@@ -5,8 +5,6 @@ import java.util.Random;
 import java.util.Stack;
 
 public class WeightedGraph <T extends Comparable<T>> {
-    private java.util.LinkedList<T> que = new java.util.LinkedList<>();
-    private java.util.LinkedList<T> visited = new java.util.LinkedList<>();
     
     Vertex<T,Integer> head;
     int size;
@@ -436,14 +434,14 @@ public class WeightedGraph <T extends Comparable<T>> {
         }
         return path;
     }
+    
     private boolean dfsUtil(T destination, Stack<T> path, ArrayList<T> visited, Vertex<T, Integer> current){
-        if(visited.contains(current.vertexInfo)){
+        if(visited.contains(current.vertexInfo)){   
             return false;
         }
-        else if(current.vertexInfo.compareTo(destination)==0){
+        else if(current.vertexInfo.compareTo(destination)==0){  // current/start is the destination
             return true;
         }
-        
         visited.add(current.vertexInfo);
         ArrayList<Vertex<T, Integer>> adjacent = getAdjacentObjects(current);
         for(Vertex<T, Integer> temp: adjacent){
@@ -455,71 +453,14 @@ public class WeightedGraph <T extends Comparable<T>> {
         return false;
     }
 
-    //Trying out bfs for six degree of ken thompson
-    /*
-    public void enqueue(T e) {
-        ///ArrayList<T> list = new ArrayList();
-        //list.add(e);
-        //return list;
-        que.addLast(e);
+    public String hop(T source, T destination) {
+        String note;
+        int hop = dfs(source,destination).indexOf(destination); 
+        if (hop <= 6 && hop!=0) 
+            note = "Yeay! you both are connected.";
+        else
+            note = "Sorry, you are too far from him!";
+        return note + "\nYour hop to Ken Thompson is: " + hop;
     }
-
-    
-    public void enqueue(ArrayList<T> e) {
-        //ArrayList<T> list = new ArrayList();
-        //list.add(e);
-        //return list;
-        que.addLast(e);
-    }
-    
-    public T dequeue() {
-        //ArrayList<T> list = new ArrayList();;
-        //list.remove(0);
-        //return list;
-        return que.removeFirst();
-    }
-    
-    public ArrayList<T> getAdjacent (T v)  {
-        if (!hasVertex(v))
-            return null;
-        ArrayList<T> list = new ArrayList<T>();
-        Vertex<T,Integer> temp = head;
-        while (temp!=null)	{
-            if ( temp.vertexInfo.compareTo( v ) == 0 )   {
-                // Reached vertex, look for destination now
-                Edge<T,Integer> currentEdge = temp.firstEdge;
-                while (currentEdge != null) {
-                    list.add(currentEdge.toVertex.vertexInfo);
-                    currentEdge=currentEdge.nextEdge;
-                }
-            }
-            temp=temp.nextVertex;
-        }
-        return list;
-    }
-    
-    public boolean bfs(T destination) {
-        Vertex<T, Integer> current = head;
-        ArrayList<T> adjacent = new ArrayList<>();
-        int n = 0;
-        if (head==null) {
-            return false;
-        }
-        //Traverse through graph 
-        while (current!=null) {
-            enqueue(current.vertexInfo);    //add the current element to the queue
-            visited.add(dequeue());         //dequeue the element and add to visited list
-            adjacent = getNeighbours(visited.get(n));
-            if (que.contains(adjacent))
-                continue;
-            else
-                enqueue(adjacent);
-            //enqueue(getAdjacent(visited.get(n)));     
-        }
-        n++;
-        current = current.nextVertex;
-        return false;
-   }
-*/
 }
 
