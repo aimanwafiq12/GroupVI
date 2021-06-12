@@ -5,7 +5,9 @@ import java.util.Random;
 import java.util.Stack;
 
 public class WeightedGraph <T extends Comparable<T>> {
-    
+    private java.util.LinkedList<T> que = new java.util.LinkedList<>();
+    private java.util.LinkedList<T> visited = new java.util.LinkedList<>();
+
     Vertex<T,Integer> head;
     int size;
     int tableSize;
@@ -217,8 +219,9 @@ public class WeightedGraph <T extends Comparable<T>> {
 
     public void printEdges()   {
         Vertex<T,Integer> temp=head;
+        int n=1;
         while (temp!=null) {
-            System.out.print("# " + temp.vertexInfo + " : " );
+            System.out.print("# "+ n +") "+ temp.vertexInfo + " : " );
             Edge<T,Integer> currentEdge = temp.firstEdge;
             while (currentEdge != null) {
                 System.out.print("[" + temp.vertexInfo + "," + currentEdge.toVertex.vertexInfo +"] " );
@@ -226,6 +229,7 @@ public class WeightedGraph <T extends Comparable<T>> {
             }
             System.out.println();
             temp=temp.nextVertex;
+            n++;
         }
     }
 
@@ -244,14 +248,14 @@ public class WeightedGraph <T extends Comparable<T>> {
 
     public void printSpecificEdges(T v){
         if(!hasVertex(v)){
-            System.out.println("Vertex " + v + " cannot be found!");
+            System.out.println("Student " + v + " is not in the list!");
         }
         else{
             Vertex<T,Integer> temp = head;
             while(temp!=null){
                 if(temp.vertexInfo.compareTo(v)==0){
-                    System.out.println("Current reputation: " + getRep(v));
-                    System.out.println("Diving Rate: " + temp.dive + "\nLunch Starting Time: " + temp.lunchStart + "\nLunch Period = " + temp.lunchPeriod);
+                    System.out.println("Current reputation(rep): " + getRep(v));
+                    System.out.println("Diving Rate(%): " + temp.dive + "\nLunch Starting Time: " + temp.lunchStart + "\nLunch Period(minutes): " + temp.lunchPeriod);
                     Edge<T,Integer> currentEdge = temp.firstEdge;
                     System.out.println("\nFriends List (reputation point):");
                     while (currentEdge != null) {
@@ -264,7 +268,7 @@ public class WeightedGraph <T extends Comparable<T>> {
             }
         }
     }
-    
+
     public Vertex<T, Integer> getVertexObject(T info){
         if(!hasVertex(info)){
             return null;
@@ -278,7 +282,7 @@ public class WeightedGraph <T extends Comparable<T>> {
         }
         return null;
     }
-    
+
     public Edge<T, Integer> getEdgeObject(T source, T destination){
         if (!hasVertex(source) || !hasVertex(destination)) {
             return null;
@@ -317,27 +321,25 @@ public class WeightedGraph <T extends Comparable<T>> {
         if (head==null) {
             return "No graph";
         }
-            //Traverse through graph to find matching studentN vertex
-            while (student!=null) {
-                if ( student.vertexInfo.compareTo(studentN) == 0) {
-                    int lunchEndS = student.lunchStart + student.lunchPeriod;
-                    lunchEndStudent = student.fixTime(lunchEndS);
-                    if ((student.lunchStart==user.lunchStart || lunchEndStudent==lunchEndUser) || (student.lunchStart>=user.lunchStart && lunchEndStudent<=lunchEndUser) || 
-                        (student.lunchStart>user.lunchStart && student.lunchStart<lunchEndUser) || (lunchEndStudent>user.lunchStart && lunchEndStudent<lunchEndUser) &&
-                        tableSize<=3) {
-                        user.totalRep(1);   //user gained 1 rep point
-                        tableSize++;        //table is occupied with 1 student excluding user
-                        str1 = "You can have lunch with \n#" + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + student.fixTime(lunchEndStudent) + "\nLunchPeriod: " + student.lunchPeriod + "\nReputation +1";
-                    }
-                    else {
-                        str1 = "You cannot hv lunch with " + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + student.fixTime(lunchEndStudent) + "\nLunchPeriod: " + student.lunchPeriod;
-                    }
+        //Traverse through graph to find matching studentN vertex
+        while (student!=null) {
+            if ( student.vertexInfo.compareTo(studentN) == 0) {
+                int lunchEndS = student.lunchStart + student.lunchPeriod;
+                lunchEndStudent = student.fixTime(lunchEndS);
+                        if ((student.lunchStart==user.lunchStart || lunchEndStudent==lunchEndUser) || (student.lunchStart>=user.lunchStart && lunchEndStudent<=lunchEndUser) || (student.lunchStart>user.lunchStart && student.lunchStart<lunchEndUser) || (lunchEndStudent>user.lunchStart && lunchEndStudent<lunchEndUser) && tableSize<=3) {
+                            user.totalRep(1);   //user gained 1 rep point
+                            tableSize++;        //table is occupied with 1 student excluding user
+                            str1 = "You can have lunch with \n#" + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + student.fixTime(lunchEndStudent) + "\nLunchPeriod: " + student.lunchPeriod + "\nReputation +1";
                 }
-                student = student.nextVertex;
+                else {
+                    str1 = "You cannot hv lunch with " + studentN + "\nLunchStart: " + student.lunchStart + "\nLunchEnd: " + student.fixTime(lunchEndStudent) + "\nLunchPeriod: " + student.lunchPeriod;
+                }
             }
+            student = student.nextVertex;
+        }
         return str1;
     }
-    
+
     /**
      * Related to Event 3
      * @param studentN
@@ -349,32 +351,32 @@ public class WeightedGraph <T extends Comparable<T>> {
         Vertex<T, Integer> student = head;  //pointer for the specified student
         Vertex<T, Integer> user = head;     //pointer for the user (student[0])
         int lunchEndU = user.lunchStart + user.lunchPeriod;
-        lunchEndUser = user.fixTime(lunchEndU);     
+        lunchEndUser = user.fixTime(lunchEndU);
         if (head==null) {
             return false;
         }
-            //Traverse through graph to find matching studentN vertex
-            while (student!=null) {
-                if ( student.vertexInfo.compareTo(studentN) == 0) {
-                    int lunchEndS = student.lunchStart + student.lunchPeriod;
-                    lunchEndStudent = student.fixTime(lunchEndS);
-                    if ((student.lunchStart==user.lunchStart || lunchEndStudent==lunchEndUser) || (student.lunchStart>=user.lunchStart && lunchEndStudent<=lunchEndUser) || 
-                        (student.lunchStart>user.lunchStart && student.lunchStart<lunchEndUser) || (lunchEndStudent>user.lunchStart && lunchEndStudent<lunchEndUser) &&
-                        tableSize<=3) {
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
+        //Traverse through graph to find matching studentN vertex
+        while (student!=null) {
+            if ( student.vertexInfo.compareTo(studentN) == 0) {
+                int lunchEndS = student.lunchStart + student.lunchPeriod;
+                lunchEndStudent = student.fixTime(lunchEndS);
+                if ((student.lunchStart==user.lunchStart || lunchEndStudent==lunchEndUser) || (student.lunchStart>=user.lunchStart && lunchEndStudent<=lunchEndUser) || (student.lunchStart>user.lunchStart && student.lunchStart<lunchEndUser) || (lunchEndStudent>user.lunchStart && lunchEndStudent<lunchEndUser) && tableSize<=3) {
+                    return true;
                 }
-                student = student.nextVertex;
+                else {
+                    return false;
+                }
             }
+            student = student.nextVertex;
+        }
         return false;
     }
-    
+
     /**
      * Related to Event 1
-     * @param v,exp,a
+     * @param v
+     * @param exp
+     * @param a
      * @return the total rep with updated reputation points
      */    public int addRepEvent1(T v, boolean exp, int a){
         if (!hasVertex(v))
@@ -402,9 +404,28 @@ public class WeightedGraph <T extends Comparable<T>> {
         }
         return 0;
     }
-    
+
+    // addRep method for EVENT 2
+    //tak setel lagi
+    public int addRepEvent2(T v, boolean msg){
+        if (!hasVertex(v))
+            return 0;
+        Vertex<T,Integer> temp = head;
+        while(temp!=null){
+            if(temp.vertexInfo.compareTo(v) == 0 && msg){
+                return temp.totalRep(10);
+            }else if(temp.vertexInfo.compareTo(v) == 0 && !msg){
+                return temp.totalRep(2);
+            }
+            temp = temp.nextVertex;
+        }
+        return 0;
+    }
+
+
     //------------------ Ken thompson-----------------------------------------------
-    
+
+
     private ArrayList<Vertex<T, Integer>> getAdjacentObjects(Vertex<T, Integer> target) {
         ArrayList<Vertex<T, Integer>> list = new ArrayList<>();
         Edge<T, Integer> currentEdge = target.firstEdge;
@@ -414,18 +435,19 @@ public class WeightedGraph <T extends Comparable<T>> {
         }
         return list;
     }
-    
+
     /**
      * Find the path from source to destination
      * @param source
      * @param destination
      * @return the path start from source and end at destination.
-     */
+     * */
+
     public ArrayList<T> dfs(T source, T destination) {
         Stack<T> pathStack = new Stack<>();
         ArrayList<T> visited = new ArrayList<>();
         Vertex<T, Integer> start = getVertexObject(source);
-        
+
         ArrayList<T> path = new ArrayList<>();
         path.add(source);
         dfsUtil(destination, pathStack, visited, start);
@@ -434,18 +456,17 @@ public class WeightedGraph <T extends Comparable<T>> {
         }
         return path;
     }
-    
-    private boolean dfsUtil(T destination, Stack<T> path, ArrayList<T> visited, Vertex<T, Integer> current){
-        if(visited.contains(current.vertexInfo)){   
+    private boolean dfsUtil(T destination, Stack<T> path, ArrayList<T> visited, Vertex<T, Integer> current) {
+        if (visited.contains(current.vertexInfo)) {
             return false;
-        }
-        else if(current.vertexInfo.compareTo(destination)==0){  // current/start is the destination
+        } else if (current.vertexInfo.compareTo(destination) == 0) {
             return true;
         }
+
         visited.add(current.vertexInfo);
         ArrayList<Vertex<T, Integer>> adjacent = getAdjacentObjects(current);
-        for(Vertex<T, Integer> temp: adjacent){
-            if(dfsUtil(destination, path, visited, temp)){
+        for (Vertex<T, Integer> temp : adjacent) {
+            if (dfsUtil(destination, path, visited, temp)) {
                 path.push(temp.vertexInfo);
                 return true;
             }
@@ -455,12 +476,12 @@ public class WeightedGraph <T extends Comparable<T>> {
 
     public String hop(T source, T destination) {
         String note;
-        int hop = dfs(source,destination).indexOf(destination); 
-        if (hop <= 6 && hop!=0) 
+        int hop = dfs(source,destination).indexOf(destination);
+        if (hop <= 6 && hop!=0)
             note = "Yeay! you both are connected.";
         else
             note = "Sorry, you are too far from him!";
         return note + "\nYour hop to Ken Thompson is: " + hop;
     }
-}
 
+}

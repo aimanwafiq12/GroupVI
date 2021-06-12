@@ -49,7 +49,7 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         //Initialize these variables for each student as below:
         // 1 <= rep <= 10,
         // 0 < Diving rate (%) < 100,
-        dive = r.nextInt(100)+1;
+        dive = r.nextInt((100-1)+1)+1;
 
         // 1100 <= lunch time <= 1400,
         // call the generateTime method
@@ -74,24 +74,18 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
     }
 
     public int generateTime(){
-        Boolean check = false;
+        Boolean check = true;
         int a=0;
-        while(!check){
-            a = r.nextInt(1350+1-1100) + 1100;
-            if(a>=1160&&a<1200){
-                continue;
+        a = r.nextInt(1350+1-1100) + 1100;
+
+        while(check){
+            if(a >= 1160 && a < 1200 || a >= 1260 && a < 1300 || a % 10 != 0 && a % 10 != 5){
+                a = r.nextInt(1350+1-1100) + 1100;
+                check = true;
+            } else{
+                check = false;
+                return a;
             }
-            else if(a>=1260&&a<1300){
-                continue;
-            }
-            else if(a>=1360&&a<1400){
-                continue;
-            }
-            else if(a%10!=0){
-                continue;
-            }
-            else
-                break;
         }
         return a;
     }
@@ -131,11 +125,11 @@ public class Vertex <T extends Comparable<T>, N extends Comparable <N>> {
         else if (time>=1260 && time<= 1310) {
             time = time + 40;
         }
-        else if (time>=1360 && time<= 1410) {
-            time = time + 40;
+        else if (time>=1360 && time<= 1410 ) {
+            time = 1400;
         }
         else if (time>=1460 && time<= 1510) {
-            time = time + 40;
+            time = 1400;
         }
         return time;
     }
