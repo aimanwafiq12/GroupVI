@@ -189,7 +189,7 @@ public class Main {
                                 System.out.println("\n******************* EVENT 3: ROAD TO GLORY *******************");
 
                                 System.out.println("This is Event 3: Road to Glory.");
-                                roadToGlory(students);
+                                roadToGlory(studentsName[0],students);
 
                                 System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 3 ****************\n");
 
@@ -342,14 +342,15 @@ public class Main {
     }
     /**
      * Event 3
+     * @param user 
      * @param students
      * Check if the user can have lunch with the specified student(s) and return the total reputation gained
      * maximum student per table is 3, excludes the user
      */
-    public static void roadToGlory(WeightedGraph<String> students) {
+    public static void roadToGlory(String user, WeightedGraph<String> students) {
         Scanner sc = new Scanner(System.in);
         int reputation = 0;
-        System.out.println("Enter number of students you want to hv lunch with: ");
+        System.out.println("Enter number of students you want to have lunch with: ");
         int n = sc.nextInt();
 
         ArrayList<String> studentList = new ArrayList<>();
@@ -357,9 +358,12 @@ public class Main {
         for (int i = 0; i <= n; i++) {
             studentList.add(sc.nextLine());
         }
-        for (int i = 0; i <= n; i++) {
-            System.out.println(students.checkLunchTime(studentList.get(i)));
-            if(students.checkRep(studentList.get(i)))
+        System.out.println();
+        for (int i = 1; i <= n; i++) {
+            System.out.println(students.checkLunchTime(user,studentList.get(i)));
+            if(students.checkRep(user, studentList.get(i)))
+            //System.out.println(students.checkLunchTime(studentList.get(i)));
+            //if(students.checkRep(studentList.get(i)))
                 reputation+=1;
             System.out.println();
         }
