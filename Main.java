@@ -189,8 +189,11 @@ public class Main {
                                 System.out.println("\n******************* EVENT 3: ROAD TO GLORY *******************");
 
                                 System.out.println("This is Event 3: Road to Glory.");
-                                roadToGlory(studentsName[0],students);
-
+				System.out.println("Enter your name:");
+                                s.nextLine();
+                                String user = s.nextLine();
+                                roadToGlory(user,students);
+				    
                                 System.out.println("\n*************** THANK YOU FOR CHOOSING EVENT 3 ****************\n");
 
                                 System.out.println("Back to THE EVENTS page? (true/false):");
