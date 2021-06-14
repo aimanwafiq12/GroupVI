@@ -21,7 +21,7 @@ The Sociopath Project is all about friendhip monitoring system. Admit that, onli
 ## Authors & Contributors
 
 Contributors names and GitHub Link
-Aiman Wafiq [@aimanwafiq12](https://github.com/aimanwafiq12)
-Ling Xing Mou [@LingXingMou](https://github.com/U2005413)
-AFIFAH BINTI ABDUL HALIM [@AfifahAbdulHalim](https://github.com/Ohalu909)
-ABDUL AZIM BIN MAT GHANI [@Azim](https://github.com/aimanwafiq12)
+- Aiman Wafiq [@aimanwafiq12](https://github.com/aimanwafiq12)
+- Ling Xing Mou [@LingXingMou](https://github.com/U2005413)
+- AFIFAH BINTI ABDUL HALIM [@AfifahAbdulHalim](https://github.com/Ohalu909)
+- ABDUL AZIM BIN MAT GHANI [@Azim](https://github.com/aimanwafiq12)
