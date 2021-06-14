@@ -13,6 +13,7 @@ public class FriendshipCalculator{
     
     public static String run(){
         Scanner sc = new Scanner(System.in);
+        total = 0;
                 
         System.out.println("Enter number of Friendship Relations: ");
         size = sc.nextInt();
